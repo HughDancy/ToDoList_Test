@@ -9,13 +9,14 @@ import Foundation
 
 
 struct TaskEntity: Hashable {
-    let id: Int
+    let id: UUID
     let title: String
     let description: String?
     let isCompleted: Bool
-    let creationDate: Date
+    let creationDate: Date?
     
     var formattedDate: String {
+        guard let creationDate = creationDate else { return "" }
         let formatter = DateFormatter()
         formatter.dateFormat = "dd//MM//yy"
         formatter.locale = Locale(identifier: "ru_RU")

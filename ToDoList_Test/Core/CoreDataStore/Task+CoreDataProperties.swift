@@ -18,8 +18,8 @@ extension Task {
         return NSFetchRequest<Task>(entityName: "Task")
     }
 
-    @NSManaged public var id: Int32
-    @NSManaged public var userId: Int16
+    @NSManaged public var id: UUID
+    @NSManaged public var userId: UUID
     @NSManaged public var title: String?
     @NSManaged public var taskDescription: String?
     @NSManaged public var date: Date?
@@ -28,5 +28,9 @@ extension Task {
 }
 
 extension Task : Identifiable {
-
+    static func sortedByDateDescending() -> [NSSortDescriptor] {
+        return [
+            NSSortDescriptor(key: "date", ascending: false)
+        ]
+    }
 }

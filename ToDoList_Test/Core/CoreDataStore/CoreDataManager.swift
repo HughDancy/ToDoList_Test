@@ -17,12 +17,12 @@ final class CoreDataManager {
     private let modelName: String
     
     // MARK: - Init
-    private init(modelName: String = "ToDoList") {
+    private init(modelName: String = "ToDoList_Test") {
         self.modelName = modelName
     }
     
     // MARK: - Persistent Container propertie
-    lazy var persistentContainer: NSPersistentContainer = {
+    private lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: modelName)
         
         // MARK: - For lightwave migration?
@@ -52,7 +52,7 @@ final class CoreDataManager {
         return persistentContainer.viewContext
     }
     
-    // For background context
+//    // For background context
     var newBackgroundContext: NSManagedObjectContext {
         let context = persistentContainer.newBackgroundContext()
         context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
@@ -79,22 +79,24 @@ final class CoreDataManager {
     }
     
     // Async saving background context
-    func saveBackgroundContext(_ context: NSManagedObjectContext, comelition: ((Result<Void, Error>) -> Void)? = nil) {
-        context.perform {
-            guard context.hasChanges else {
-                comelition?(.success(()))
-                return
-            }
-            
-            do {
-                try context.save()
-                comelition?(.success(()))
-            } catch {
-                print("[\(String(describing: self))] Went some error on saving background context - \(error.localizedDescription)")
-                comelition?(.failure(error))
-            }
-        }
-    }
+//    func saveBackgroundContext(_ context: NSManagedObjectContext, comelition: ((Result<Void, Error>) -> Void)? = nil) {
+//        context.perform {
+//            guard context.hasChanges else {
+//                comelition?(.success(()))
+//                return
+//            }
+//            
+//            do {
+//                try context.save()
+//                comelition?(.success(()))
+//            } catch {
+//                print("[\(String(describing: self))] Went some error on saving background context - \(error.localizedDescription)")
+//                comelition?(.failure(error))
+//            }
+//        }
+//    }
+    
+    
     
     // MARK: - Support Methods
     func getStoredItemsCount<T: NSManagedObject>(for entity: T.Type, predicate: NSPredicate? = nil, in context: NSManagedObjectContext) -> Int {
